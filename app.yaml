@@ -1,0 +1,12 @@
+application: bozemanpolicereports
+version: 3
+runtime: python
+api_version: 1
+
+handlers:
+- url: /rss
+  script: rss.py
+- url: /rss/.*
+  script: rss.py
+- url: /refresh/.*
+  script: index.py

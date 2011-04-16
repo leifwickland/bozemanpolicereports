@@ -1,0 +1,5 @@
+cron:
+- description: Check for new content
+  url: /refresh/
+  schedule: every 2 hours synchronized
+
