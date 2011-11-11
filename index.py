@@ -5,6 +5,7 @@ import re
 from reportitem import ReportItem
 import htmlentitydefs
 import os
+from google.appengine.api import memcache
 
 def getPage():
     url = ''
@@ -129,16 +130,7 @@ if len(newItems) == 0:
 else:
     debugAndPrint("Starting to post items: %d" % len(newItems))
     for newItem in newItems:
-        # If testing use the following:
-        #debugAndPrint("Would've posted: %s" % newItem.content)
-        #logging.critical("In DEV MODE")
-        #newItem.put()
-        #continue
-
-        #or in the real world:
-        #response = newItem.postToTwitter()
-        #if response.status == 200:
-        debugAndPrint('Successfully posted: ' + newItem.content)
         newItem.put()
-        #else:
-            #errorAndPrint("Failed to post: %s\nstatus: %s\nreason: %s\nresponse: %s" % newItem.content, response.status, response.reason, response.read())
+        debugAndPrint('Successfully recorded: ' + newItem.content)
+    memcache.delete("rss")
+    debugAndPrint("Invalidated memcache")
