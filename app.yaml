@@ -5,9 +5,7 @@ api_version: 1
 threadsafe: false
 
 handlers:
-- url: /rss
-  script: rss.py
-- url: /rss/.*
+- url: /rss($|/.*)
   script: rss.py
 - url: /refresh/.*
   script: index.py
