@@ -51,16 +51,28 @@ def parseItemsFromBody(body):
         item = item.strip()
         debugAndPrint("Fixed up item: " + item);
         if len(item) == 0:
+            debugAndPrint("Discarding an empty line");
             continue
         if 0 <= item.find('index-story-prologue'):
+            debugAndPrint("Discarding because index-story-prologue: " + item);
             continue
         if 0 <= item.find('included the following'):
+            debugAndPrint("Discarding because 'included the following': " + item);
             continue
-        if re.search('\d+\s+(inmates|people under its supervision)', item):
+        if re.search('\d+\s+(inmates|people under its supervision|calls)', item):
+            debugAndPrint("Discarding because 'inmates|people|calls': " + item);
             continue
         if re.search('people.*sheriff.*county work program', item):
+            debugAndPrint("Discarding because 'work program': " + item);
+            continue
+        if re.search('^Posted:', item):
+            debugAndPrint("Discarding because 'Posted': " + item);
+            continue
+        if re.search('^Comments\s*$', item):
+            debugAndPrint("Discarding because 'Comments': " + item);
             continue
         if item == 'Advertisement':
+            debugAndPrint("Discarding because 'Advertisement': " + item);
             continue
         items.append(item)
         logging.debug("Item: %s" % item)
